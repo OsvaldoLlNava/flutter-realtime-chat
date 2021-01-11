@@ -1,8 +1,10 @@
+import 'package:chat_realtime/services/auth_service.dart';
 import 'package:chat_realtime/widgets/boton_azul.dart';
 import 'package:chat_realtime/widgets/custom_input.dart';
 import 'package:chat_realtime/widgets/labels.dart';
 import 'package:chat_realtime/widgets/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -56,6 +58,7 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Container(
         margin: EdgeInsets.only(top: 40),
         padding: EdgeInsets.symmetric(horizontal: 50),
@@ -77,10 +80,13 @@ class __FormState extends State<_Form> {
             ),
             BotonAzul(
               text: 'Ingrese',
-              onPress: () {
-                print(emailController.text);
-                print(passController.text);
-              },
+              onPress: authService.autenticando
+                  ? null
+                  : () {
+                      FocusScope.of(context).unfocus();
+                      authService.login(emailController.text.trim(),
+                          passController.text.trim());
+                    },
             ),
           ],
         ));

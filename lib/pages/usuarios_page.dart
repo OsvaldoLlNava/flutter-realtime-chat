@@ -11,11 +11,11 @@ class UsuariosPage extends StatefulWidget {
 
 class _UsuariosPageState extends State<UsuariosPage> {
   final usuarios = [
-    Usuario(online: false, email: 'meli@mail.com', nombre: 'Melissa', uid: '1'),
-    Usuario(online: true, email: 'andy@mail.com', nombre: 'Andrea', uid: '2'),
-    Usuario(online: false, email: 'pao@mail.com', nombre: 'Paola', uid: '3'),
-    Usuario(
-        online: true, email: 'osvaldo@mail.com', nombre: 'Osvaldo', uid: '4'),
+    // Usuario(online: false, email: 'meli@mail.com', nombre: 'Melissa', uid: '1'),
+    // Usuario(online: true, email: 'andy@mail.com', nombre: 'Andrea', uid: '2'),
+    // Usuario(online: false, email: 'pao@mail.com', nombre: 'Paola', uid: '3'),
+    // Usuario(
+    //     online: true, email: 'osvaldo@mail.com', nombre: 'Osvaldo', uid: '4'),
   ];
 
   RefreshController _refreshController =
