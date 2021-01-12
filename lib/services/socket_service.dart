@@ -34,7 +34,7 @@ class SocketService with ChangeNotifier {
       'forceNew': true,
       'extraHeaders': {
         'x-token': token
-      }
+      } 
     });
 
     this._socket.on('connect', (_) {

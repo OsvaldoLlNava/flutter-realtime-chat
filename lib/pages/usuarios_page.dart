@@ -1,6 +1,7 @@
 import 'package:chat_realtime/models/usuario.dart';
 import 'package:chat_realtime/services/auth_service.dart';
 import 'package:chat_realtime/services/socket_service.dart';
+import 'package:chat_realtime/services/usuarios_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,16 +14,18 @@ class UsuariosPage extends StatefulWidget {
 }
 
 class _UsuariosPageState extends State<UsuariosPage> {
-  final usuarios = [
-    // Usuario(online: false, email: 'meli@mail.com', nombre: 'Melissa', uid: '1'),
-    // Usuario(online: true, email: 'andy@mail.com', nombre: 'Andrea', uid: '2'),
-    // Usuario(online: false, email: 'pao@mail.com', nombre: 'Paola', uid: '3'),
-    // Usuario(
-    //     online: true, email: 'osvaldo@mail.com', nombre: 'Osvaldo', uid: '4'),
-  ];
+  final usuariosService = new UsuariosService();
+
+  List<Usuario> usuarios = [];
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+
+  @override
+  void initState() {
+    this._cargarUsuarios();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,9 @@ class _UsuariosPageState extends State<UsuariosPage> {
         actions: [
           Container(
             margin: EdgeInsets.only(right: 10),
-            child: socketService.serverStatus == ServerStatus.Online //Aqui colocar la condicion de si esta o no conectado
+            child: socketService.serverStatus ==
+                    ServerStatus
+                        .Online //Aqui colocar la condicion de si esta o no conectado
                 ? Icon(
                     Icons.check_circle,
                     color: Colors.blue[300],
@@ -113,7 +118,11 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   _cargarUsuarios() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    // await Future.delayed(Duration(milliseconds: 1000));
+
+    this.usuarios = await usuariosService.getUsuarios();
+    setState(() {});
+
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
