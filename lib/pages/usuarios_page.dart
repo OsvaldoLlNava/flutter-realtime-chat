@@ -52,7 +52,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         actions: [
           Container(
             margin: EdgeInsets.only(right: 10),
-            child: true //Aqui colocar la condicion de si esta o no conectado
+            child: socketService.serverStatus == ServerStatus.Online //Aqui colocar la condicion de si esta o no conectado
                 ? Icon(
                     Icons.check_circle,
                     color: Colors.blue[300],
