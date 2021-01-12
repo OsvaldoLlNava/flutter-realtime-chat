@@ -1,8 +1,11 @@
+import 'package:chat_realtime/helpers/mostrar_alerta.dart';
+import 'package:chat_realtime/services/auth_service.dart';
 import 'package:chat_realtime/widgets/boton_azul.dart';
 import 'package:chat_realtime/widgets/custom_input.dart';
 import 'package:chat_realtime/widgets/labels.dart';
 import 'package:chat_realtime/widgets/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key key}) : super(key: key);
@@ -18,7 +21,7 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Logo(titulo:'Registro'),
+                Logo(titulo: 'Registro'),
                 _Form(),
                 Labels(
                   text1: 'Ya tienes una cuenta?',
@@ -49,13 +52,15 @@ class _Form extends StatefulWidget {
 }
 
 class __FormState extends State<_Form> {
-
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
         margin: EdgeInsets.only(top: 40),
         padding: EdgeInsets.symmetric(horizontal: 50),
@@ -83,13 +88,40 @@ class __FormState extends State<_Form> {
               isPassword: true,
             ),
             BotonAzul(
-              text: 'Ingrese',
-              onPress: () {
-                print(nameController.text);
-                print(emailController.text);
-                print(passController.text);
-              },
+              text: 'Crear Cuenta',
+              onPress: authService.autenticando
+                  ? null
+                  : () async {
+                      FocusScope.of(context).unfocus();
+                      final registerOk = await authService.register(
+                        nameController.text.trim(),
+                        emailController.text.trim(),
+                        passController.text.trim(),
+                      );
+
+                      if (registerOk == true) {
+                        // conectar a nuestro socket server
+
+                        // navegar a otra pantalla
+                        Navigator.pushReplacementNamed(context, 'usuarios');
+                      } else {
+                        //mostrar alerta
+                        mostrarAlerta(
+                          context,
+                          'Registro Incorrecto',
+                          registerOk,
+                        );
+                      }
+                    },
             ),
+            // BotonAzul(
+            //   text: 'Ingrese',
+            //   onPress: () {
+            //     // print(nameController.text);
+            //     // print(emailController.text);
+            //     // print(passController.text);
+            //   },
+            // ),
           ],
         ));
   }

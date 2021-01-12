@@ -1,3 +1,4 @@
+import 'package:chat_realtime/helpers/mostrar_alerta.dart';
 import 'package:chat_realtime/services/auth_service.dart';
 import 'package:chat_realtime/widgets/boton_azul.dart';
 import 'package:chat_realtime/widgets/custom_input.dart';
@@ -82,10 +83,26 @@ class __FormState extends State<_Form> {
               text: 'Ingrese',
               onPress: authService.autenticando
                   ? null
-                  : () {
+                  : () async {
                       FocusScope.of(context).unfocus();
-                      authService.login(emailController.text.trim(),
-                          passController.text.trim());
+                      final loginOk = await authService.login(
+                        emailController.text.trim(),
+                        passController.text.trim(),
+                      );
+
+                      if (loginOk) {
+                        // conectar a nuestro socket server
+
+                        // navegar a otra pantalla
+                        Navigator.pushReplacementNamed(context, 'usuarios');
+                      } else {
+                        //mostrar alerta
+                        mostrarAlerta(
+                          context,
+                          'Login Incorrecto',
+                          'Revise sus credenciales',
+                        );
+                      }
                     },
             ),
           ],
