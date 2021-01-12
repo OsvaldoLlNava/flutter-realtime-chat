@@ -1,3 +1,4 @@
+import 'package:chat_realtime/services/socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,11 +30,14 @@ class LoadingPage extends StatelessWidget {
 
     final autenticado = await authService.isLoggedIn();
 
+    final socketService = Provider.of<SocketService>(context, listen: false);
+
     if (autenticado) {
       //conectar al socket server
+      socketService.connect();
       // Navigator.pushReplacementNamed(context, 'usuarios');
-      Navigator.pushReplacement(
-          context, PageRouteBuilder(pageBuilder: (_, __, ___) => UsuariosPage()));
+      Navigator.pushReplacement(context,
+          PageRouteBuilder(pageBuilder: (_, __, ___) => UsuariosPage()));
     } else {
       // Navigator.pushReplacementNamed(context, 'login');
       Navigator.pushReplacement(

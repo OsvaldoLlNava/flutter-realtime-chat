@@ -1,5 +1,6 @@
 import 'package:chat_realtime/helpers/mostrar_alerta.dart';
 import 'package:chat_realtime/services/auth_service.dart';
+import 'package:chat_realtime/services/socket_service.dart';
 import 'package:chat_realtime/widgets/boton_azul.dart';
 import 'package:chat_realtime/widgets/custom_input.dart';
 import 'package:chat_realtime/widgets/labels.dart';
@@ -58,8 +59,8 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
-
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
         margin: EdgeInsets.only(top: 40),
@@ -101,6 +102,7 @@ class __FormState extends State<_Form> {
 
                       if (registerOk == true) {
                         // conectar a nuestro socket server
+                        socketService.connect();
 
                         // navegar a otra pantalla
                         Navigator.pushReplacementNamed(context, 'usuarios');
