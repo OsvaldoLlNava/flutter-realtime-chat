@@ -1,3 +1,4 @@
+import 'package:chat_realtime/services/chat_service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => SocketService(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChatService(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

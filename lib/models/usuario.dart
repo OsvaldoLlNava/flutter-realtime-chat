@@ -13,25 +13,25 @@ class Usuario {
         this.online,
         this.nombre,
         this.email,
-        this.iud,
+        this.uid,
     });
 
     bool online;
     String nombre;
     String email;
-    String iud;
+    String uid;
 
     factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
         online: json["online"],
         nombre: json["nombre"],
         email: json["email"],
-        iud: json["iud"],
+        uid: json["uid"],
     );
 
     Map<String, dynamic> toJson() => {
         "online": online,
         "nombre": nombre,
         "email": email,
-        "iud": iud,
+        "uid": uid,
     };
 }

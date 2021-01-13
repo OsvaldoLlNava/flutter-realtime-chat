@@ -1,5 +1,6 @@
 import 'package:chat_realtime/models/usuario.dart';
 import 'package:chat_realtime/services/auth_service.dart';
+import 'package:chat_realtime/services/chat_service.dart';
 import 'package:chat_realtime/services/socket_service.dart';
 import 'package:chat_realtime/services/usuarios_service.dart';
 import 'package:flutter/material.dart';
@@ -113,6 +114,14 @@ class _UsuariosPageState extends State<UsuariosPage> {
           borderRadius: BorderRadius.circular(30),
         ),
       ),
+      onTap: (){
+        final chatService = Provider.of<ChatService>(context, listen:false);
+        chatService.usuarioPara = usuario;
+        Navigator.pushNamed(context, 'chat');
+        print(usuario.nombre);
+        print(usuario.email);
+        print(usuario.uid);
+      },
     );
   }
 
