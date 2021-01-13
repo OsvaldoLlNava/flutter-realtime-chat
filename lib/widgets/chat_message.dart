@@ -16,8 +16,7 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthService>(context, listen: false);
 
     return FadeTransition(
       opacity: animationController,
@@ -27,7 +26,9 @@ class ChatMessage extends StatelessWidget {
           curve: Curves.easeOut,
         ),
         child: Container(
-          child: this.uid == authService.usuario.uid ? _myMessage() : _notMyMessage(),
+          child: this.uid == authService.usuario.uid
+              ? _myMessage()
+              : _notMyMessage(),
         ),
       ),
     );
@@ -38,7 +39,7 @@ class ChatMessage extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: Container(
         margin: EdgeInsets.only(bottom: 5, left: 50, right: 5),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
         child: Text(
           texto,
           style: TextStyle(
@@ -58,15 +59,15 @@ class ChatMessage extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.only(bottom: 5, left: 5, right: 50),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
         child: Text(
           texto,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
           ),
         ),
         decoration: BoxDecoration(
-          color: Colors.blue[300],
+          color: Colors.grey[300],
           borderRadius: BorderRadius.circular(30),
         ),
       ),
